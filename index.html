@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERO - The Standard for AI Trust</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;600&family=Montserrat:wght@600;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ------------------- */
+        /* --- CSS RESET & GLOBALS --- */
+        /* ------------------- */
+        :root {
+            --bg-color: #020010;
+            --primary-accent: #8A2BE2; /* BlueViolet */
+            --secondary-accent: #4F46E5; /* Indigo */
+            --text-light: #fbfbfbe4;
+            --text-dark: #a09cb0;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glow-color-1: #8A2BE2;
+            --glow-color-2: #4F46E5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            /* UPDATED: Changed default font to Inconsolata */
+            font-family: 'Inconsolata', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* ------------------- */
+        /* --- AURORA BACKGROUND --- */
+        /* ------------------- */
+        .background-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; 
+        }
+
+        .background-glow::before, .background-glow::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+        }
+
+        .background-glow::before {
+            background: var(--glow-color-1);
+            width: 500px;
+            height: 500px;
+            top: -150px;
+            left: -150px;
+            animation: pulse 15s infinite alternate;
+        }
+
+        .background-glow::after {
+            background: var(--glow-color-2);
+            width: 600px;
+            height: 600px;
+            bottom: -200px;
+            right: -200px;
+            animation: pulse 20s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); }
+            100% { transform: scale(1.2); }
+        }
+
+
+        /* ------------------- */
+        /* --- GENERAL LAYOUT --- */
+        /* ------------------- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        /* ------------------- */
+        /* --- HERO SECTION --- */
+        /* ------------------- */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            /* UPDATED: Set heading font to Montserrat */
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(90deg, var(--text-light) 70%, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-wrap: balance;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            line-height: 1.6;
+        }
+
+        .waitlist-form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .waitlist-form input {
+            padding: 16px 24px;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            border-radius: 8px;
+            width: 320px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .waitlist-form input::placeholder {
+            color: var(--text-dark);
+        }
+        
+        .waitlist-form input:focus {
+            outline: none;
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
+        }
+
+        .waitlist-form button {
+            padding: 16px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .waitlist-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .background-logo-bottom {
+            /* UPDATED: Added backlight effect */
+            font-family: 'Montserrat', sans-serif;
+            font-size: 25vw;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.05);
+            position: absolute;
+            bottom: -5vw;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+            /* BACKLIGHT EFFECT */
+            text-shadow: 
+                0 0 40px rgba(138, 43, 226, 0.3),
+                0 0 80px rgba(79, 70, 229, 0.2),
+                0 0 120px rgba(138, 43, 226, 0.1);
+            filter: drop-shadow(0 0 40px rgba(138, 43, 226, 0.15));
+        }
+        
+        /* ------------------- */
+        /* --- FAQ SECTION --- */
+        /* ------------------- */
+        .faq-section {
+            padding-bottom: 150px;
+        }
+        
+        .background-logo-center {
+            /* UPDATED: Set font and fixed click issue */
+            font-family: 'Montserrat', sans-serif;
+            font-size: 25vw;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.05);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            user-select: none;
+            pointer-events: none; /* FIX: Prevents this element from capturing mouse clicks */
+        }
+
+        .faq-section h2 {
+            /* UPDATED: Set heading font to Montserrat */
+            font-family: 'Inconsolata', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+        
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .faq-item h4 {
+            /* UPDATED: Set heading font to Montserrat */
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .faq-item p {
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* ------------------- */
+        /* --- RESPONSIVENESS --- */
+        /* ------------------- */
+        @media (max-width: 992px) {
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            .waitlist-form {
+                flex-direction: column;
+                align-items: center;
+            }
+            .waitlist-form input, .waitlist-form button {
+                width: 100%;
+                max-width: 400px;
+            }
+            .faq-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-glow"></div>
+    
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 style="background: -webkit-linear-gradient(#ffffffc5, #ffffff);-webkit-background-clip: text;  -webkit-text-fill-color: transparent;">Building the Standard for AI Trust</h1>
+                <p>Use our evaluation suite to get the data-driven reports you need to move from uncertainty to undeniable proof of quality.</p>
+                <form class="waitlist-form" action="https://submit-form.com/tWxjNTekk" method="POST">
+                    <input type="email" name="email" placeholder="Enter your email to join" required>
+                    <button type="submit">Join Waitlist</button>
+                </form>
+            </div>
+            <div class="background-logo-bottom" aria-hidden="true">VERO</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="faq-section">
+            <div class="background-logo-center" aria-hidden="true">VERO</div>
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-grid">
+                    
+                    <div class="faq-item">
+                        <h4>What does Vero offer?</h4>
+                        <p>Vero provides a comprehensive platform for the evaluation and continuous monitoring of RAG pipelines, ensuring optimal performance and reliability.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h4>How do I use Vero?</h4>
+                        <p>Gain end-to-end insights with detailed reports specialized for developers, product managers, and stakeholders alike. Just connect your pipeline and run an evaluation.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>How long does a report take?</h4>
+                        <p>Our powerful evaluation engine is designed for speed. While currently in beta, reports are typically generated within a few hours, not days.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>Does Vero support version control?</h4>
+                        <p>Yes, robust version control for your RAG pipeline configurations is a core feature, allowing you to track changes and compare performance over time.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>What is RAG?</h4>
+                        <p>Retrieval-Augmented Generation (RAG) is an AI framework for improving the quality of LLM responses by grounding the model on external knowledge sources.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h4>What can I expect after joining?</h4>
+                        <p>By joining the waitlist, you'll be first in line for a product demo and an invitation to set up your first evaluation as we roll out access.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
