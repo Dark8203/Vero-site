@@ -1,655 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VERO - The Standard for Trusting AI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vero — Ship AI Users Can Trust | 95%+ Accuracy</title>
+    <meta name="description" content="Vero hardens RAG and agentic workflows so you ship reliable, enterprise‑grade AI. Stop trust erosion: diagnose retrieval, fix reranking, prove 95%+ accuracy." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
-        :root {
-            /* Custom color palette */
-            --bg-primary: #f8f9fb;
-            --bg-secondary: #f4f3fb;
-            --bg-card: rgba(255, 255, 255, 0.8);
-            --accent-primary: #1b268f;
-            --accent-secondary: #eb4e42;
-            --accent-tertiary: #f2cb40;
-            --accent-quaternary: #10b981;
-            --accent-purple: #8b5cf6;
-            --text-primary: #0e052a;
-            --text-secondary: #6b7280;
-            --text-muted: #9ca3af;
-            --text-light: #ffffff;
-            --border: rgba(31, 41, 55, 0.1);
-            --glass: rgba(244,243,251, 0.9);
-            --glow: rgba(27, 38, 143, 0.2);
-            --highlight: #f2cb40;
-            --gradient-bg: linear-gradient(135deg, #f8f9fb 0%, #e5e7eb 50%, #d1d5db 100%);
-            --font-primary: 'Space Grotesk', sans-serif;
-            --font-mono: 'IBM Plex Mono', monospace;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-primary);
-            background: var(--gradient-bg);
-            color: var(--text-primary);
-            line-height: 1.7;
-        }
-
-        /* Subtle background animation */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.4;
-        }
-
-        .bg-animation::before {
-            content: '';
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
-            top: 10%;
-            right: 10%;
-            filter: blur(120px);
-            animation: float 20s infinite ease-in-out;
-        }
-
-        /* Grid pattern overlay */
-        .grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(var(--border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 60px 60px;
-            z-index: -1;
-            opacity: 0.4;
-            animation: gridMove 30s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 0;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: var(--font-mono);
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .nav-cta {
-            padding: 12px 24px;
-            background: var(--accent-primary);
-            border: none;
-            border-radius: 8px;
-            color: var(--text-light);
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .nav-cta:hover {
-            background: var(--accent-secondary);
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section - Redesigned */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            padding-top: 80px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        .hero-content {
-            text-align: center;
-            max-width: 858px;
-            margin: 0 auto;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 32px;
-            backdrop-filter: blur(10px);
-            color: var(--text-secondary);
-        }
-
-        .hero-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--accent-primary);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 6vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            color: var(--text-primary);
-        }
-
-        .hero h1 .highlight {
-            color: var(--accent-primary);
-            position: relative;
-        }
-
-        .hero h1 .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            height: 10px;
-            background: var(--accent-tertiary);
-            border-radius: 2px;
-            opacity: 0.8;
-            z-index: -1;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
-
-        /* Waitlist Form */
-        .waitlist-form {
-            display: flex;
-            gap: 12px;
-            max-width: 500px;
-            margin: 0 auto 60px auto;
-        }
-
-        .trust-indicators {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
-        }
-
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .trust-item::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: var(--accent-tertiary);
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-        }
-
-        .waitlist-form input {
-            flex: 1;
-            padding: 16px 20px;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 16px;
-            backdrop-filter: blur(20px);
-            transition: all 0.3s ease;
-        }
-
-        .waitlist-form input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .waitlist-form input:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px var(--glow);
-        }
-
-        .waitlist-form button {
-            padding: 16px 28px;
-            background: var(--accent-secondary);
-            border: none;
-            border-radius: 8px;
-            color: var(--text-light);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .waitlist-form button:hover {
-            background: #d63f36;
-            transform: translateY(-2px);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 120px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 60px auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 32px;
-        }
-
-        .feature-card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 32px;
-            backdrop-filter: blur(20px);
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-primary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-purple));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            font-size: 28px;
-            color: var(--text-light);
-            box-shadow: 0 8px 20px var(--glow);
-        }
-
-        .feature-card h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-        }
-
-        /* FAQ Section */
-        .faq {
-            padding: 120px 0;
-            background: var(--bg-secondary);
-        }
-
-        .faq-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 24px;
-        }
-
-        .faq-item {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            backdrop-filter: blur(20px);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .faq-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--accent-primary);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .faq-item:hover {
-            border-color: var(--accent-primary);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(27, 38, 143, 0.1);
-        }
-
-        .faq-item:hover::before {
-            opacity: 1;
-        }
-
-        .faq-item h4 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-        }
-
-        .faq-item p {
-            color: var(--text-secondary);
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 120px 0;
-            text-align: center;
-        }
-
-        .cta-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .cta-section h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--text-primary);
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 18px 36px;
-            background: var(--accent-secondary);
-            border: none;
-            border-radius: 8px;
-            color: var(--text-light);
-            font-weight: 600;
-            font-size: 18px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background: #d63f36;
-            transform: translateY(-2px);
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .waitlist-form {
-                flex-direction: column;
-                max-width: 400px;
-                margin: 0 auto;
-            }
-
-            .trust-indicators {
-                flex-direction: column;
-                gap: 16px;
-                align-items: center;
-            }
-
-            .features-grid,
-            .faq-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-container {
-                padding: 0 20px;
-            }
-        }
+      :root {
+        --bg: #070b14;
+        --bg-2: #0c1220;
+        --panel: #0f172a;
+        --text: #eaf0ff;
+        --muted: #9fb0d6;
+        --border: rgba(255,255,255,0.08);
+        --brand: #7ee787;
+        --brand-2: #4cc9f0;
+        --accent: #f7b500;
+        --danger: #ff6b6b;
+        --radius: 14px;
+        --shadow: 0 20px 60px rgba(0,0,0,0.45);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; background: radial-gradient(1200px 800px at 80% -10%, rgba(76,201,240,0.15), transparent), radial-gradient(1000px 700px at -10% 20%, rgba(126,231,135,0.12), transparent), var(--bg); color: var(--text); font-family: 'Space Grotesk', system-ui, -apple-system, Segoe UI, Inter, Roboto, Arial, sans-serif; line-height: 1.5; }
+      a { color: var(--brand-2); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+      header { position: sticky; top: 0; backdrop-filter: blur(8px) saturate(140%); background: linear-gradient(180deg, rgba(7,11,20,0.85), rgba(7,11,20,0.55)); border-bottom: 1px solid var(--border); z-index: 20; }
+      .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+      .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: 0.2px; }
+      .logo-badge { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: inset 0 8px 28px rgba(0,0,0,0.35); }
+      .nav-right { display: flex; gap: 16px; align-items: center; }
+      .nav-link { color: var(--muted); font-weight: 600; }
+      .cta { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #0b1220; border-radius: 12px; font-weight: 800; border: none; }
+      .hero { padding: 72px 0 32px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: center; }
+      .badge { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border); background: #0c1427; color: var(--muted); font-size: 12px; font-family: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace; }
+      .badge .dot { width: 6px; height: 6px; background: var(--danger); border-radius: 999px; display: inline-block; }
+      h1 { font-size: clamp(34px, 6vw, 66px); line-height: 1.04; margin: 12px 0 12px; letter-spacing: -0.6px; }
+      h1 .highlight { color: var(--brand-2); }
+      p.lead { color: var(--muted); font-size: 18px; margin: 0 0 18px; }
+      .mentions { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; }
+      .mention { display: inline-flex; align-items: center; padding: 6px 10px; font-family: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace; font-size: 12px; color: var(--text); background: #0e1628; border: 1px solid var(--border); border-radius: 999px; }
+      .mention::before { content: '/'; color: var(--brand-2); margin-right: 4px; }
+      .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+      .btn { padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); background: #0c1427; color: var(--text); font-weight: 700; }
+      .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #0b1220; border: none; }
+      .code { background: #0e1526; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-family: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace; color: var(--text); }
+      .panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+      .illus { width: 100%; height: 420px; border-radius: var(--radius); position: relative; display: grid; place-items: center; background: radial-gradient(100% 80% at 60% 10%, rgba(126,231,135,0.25), transparent 70%), radial-gradient(100% 80% at 30% 60%, rgba(76,201,240,0.22), transparent 70%), #0f172a; border: 1px solid var(--border); }
+      .illus svg { width: 86%; height: auto; }
+      .section { padding: 56px 0; }
+      .muted { color: var(--muted); }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .card { padding: 18px; }
+      .metric { display: grid; grid-template-columns: 1fr auto; align-items: center; margin: 8px 0; }
+      .metric .k { color: var(--muted); font-size: 12px; }
+      .metric .v { font-weight: 800; }
+      .delta.bad { color: var(--danger); }
+      .delta.good { color: var(--brand); }
+      .stripe { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: center; }
+      .bar { height: 10px; border-radius: 999px; background: #0e1628; border: 1px solid var(--border); overflow: hidden; }
+      .bar > span { display: block; height: 100%; background: linear-gradient(90deg, var(--brand), var(--brand-2)); }
+      footer { padding: 28px 0 48px; color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+      @media (max-width: 960px) { .hero { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr; } .grid-2 { grid-template-columns: 1fr; } .stripe { grid-template-columns: 1fr; } }
     </style>
-</head>
-<body>
-    <div class="bg-animation"></div>
-    <div class="grid-overlay"></div>
-
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">VERO</div>
-            <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <div class="logo"><span class="logo-badge"></span> Vero</div>
+        <div class="nav-right">
+          <a class="nav-link" href="#risk">Risk</a>
+          <a class="nav-link" href="#report">Report</a>
+          <a class="nav-link" href="#how">How</a>
+          <a class="nav-link" href="#roles">For teams</a>
+          <a class="cta" href="#cta">pip install vero-eval</a>
         </div>
-    </nav>
+      </div>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="hero-badge">
-                        🚀 Building the future of trust in AI
-                    </div>
-                    <h1>The <span class="highlight">Standard</span> for Trusting AI</h1>
-                    <p>Transform uncertainty into confidence with our comprehensive evaluation suite. Get data-driven reports that prove your AI quality beyond doubt.</p>
-                    
-                    <form class="waitlist-form" action="https://submit-form.com/tWxjNTekk" method="POST" id="waitlist">
-                        <input type="email" name="email" placeholder="Enter your email" required>
-                        <button type="submit">Join Waitlist</button>
-                    </form>
+    <main class="container">
+      <section class="hero" id="top">
+        <div>
+          <div class="badge"><span class="dot"></span> Accuracy is trust. Trust is retention.</div>
+          <h1>Ship <span class="highlight">enterprise‑grade</span> AI your users can trust</h1>
+          <p class="lead">Everyone is shipping AI. The difference is whether users stay. Any accuracy mishap erodes trust and sends them to competitors. Vero takes your app from 80% off‑the‑shelf to <strong>95%+ production accuracy</strong>.</p>
+          <div class="mentions">
+            <span class="mention">PMs</span>
+            <span class="mention">Lead‑Engineers</span>
+            <span class="mention">CTOs</span>
+            <span class="mention">Security</span>
+            <span class="mention">RAG</span>
+          </div>
+          <div class="hero-ctas">
+            <a class="btn primary" href="#demo" id="cta-demo">Book a stakeholder demo</a>
+            <a class="btn" href="#" onclick="copyInstall()" id="copyBtn">Copy: pip install vero-eval</a>
+            <code class="code">pip install vero-eval</code>
+          </div>
+        </div>
+        <div class="illus panel" aria-label="Illustration: Trust meter and evaluation flow">
+          <svg viewBox="0 0 900 520" role="img" aria-labelledby="illusTitle illusDesc">
+            <title id="illusTitle">Trust & Evaluation</title>
+            <desc id="illusDesc">Bar showing trust loss from errors and RAG evaluation blocks.</desc>
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1"><stop offset="0%" stop-color="#7ee787"/><stop offset="100%" stop-color="#4cc9f0"/></linearGradient>
+            </defs>
+            <g fill="none" stroke="#2b3a58" stroke-width="2">
+              <rect x="60" y="60" width="780" height="28" rx="14" fill="#0b1220" />
+              <rect x="60" y="60" width="620" height="28" rx="14" fill="url(#g1)" stroke="none" />
+              <text x="60" y="52" fill="#9fb0d6">User trust</text>
+              <text x="700" y="80" fill="#ff6b6b">Errors → churn</text>
+              <rect x="60" y="140" width="180" height="80" rx="12" fill="#0b1220" />
+              <text x="150" y="187" fill="#9fb0d6" text-anchor="middle">Corpus</text>
+              <rect x="280" y="140" width="180" height="80" rx="12" fill="#0b1220" />
+              <text x="370" y="187" fill="#9fb0d6" text-anchor="middle">Retriever</text>
+              <rect x="500" y="140" width="180" height="80" rx="12" fill="#0b1220" />
+              <text x="590" y="187" fill="#9fb0d6" text-anchor="middle">LLM</text>
+              <rect x="720" y="140" width="120" height="80" rx="12" fill="#0b1220" />
+              <text x="780" y="187" fill="#9fb0d6" text-anchor="middle">Eval</text>
+              <path d="M240 180 H280" /><path d="M460 180 H500" /><path d="M680 180 H720" />
+            </g>
+            <g>
+              <text x="60" y="260" fill="#9fb0d6">From our in‑house report</text>
+              <text x="60" y="290" fill="#eaf0ff">Failures due to retrieval: <tspan fill="#ff6b6b">52%</tspan></text>
+              <text x="60" y="320" fill="#eaf0ff">Failures due to reranking: <tspan fill="#ff6b6b">30%</tspan></text>
+              <text x="60" y="350" fill="#9fb0d6">Faithfulness 0.98 • Recall 0.42 • MAP 0.50 • NDCG@10 0.57</text>
+            </g>
+          </svg>
+        </div>
+      </section>
 
-                    <div class="trust-indicators">
-                        <div class="trust-item">Early access priority</div>
-                        <div class="trust-item">Product demo included</div>
-                        <div class="trust-item">No spam, unsubscribe anytime</div>
-                    </div>
-                </div>
+      <section id="risk" class="section panel" style="padding: 20px;">
+        <div class="stripe">
+          <div class="card">
+            <h2>Trust erosion is expensive</h2>
+            <p class="muted">A single wrong answer can tank retention. In our internal evaluation, <strong>52% of failures</strong> came from retrieval recall gaps and <strong>30%</strong> from reranking misplacements — faithfulness was high (0.98), but the model was <em>faithful to the wrong context</em>.</p>
+            <div class="metric"><span class="k">Task success</span><span class="v">0.62</span></div>
+            <div class="metric"><span class="k">Retrieval recall</span><span class="v delta bad">0.42</span></div>
+            <div class="metric"><span class="k">Reranker MAP</span><span class="v delta bad">0.50</span></div>
+            <div class="metric"><span class="k">Faithfulness</span><span class="v delta good">0.98</span></div>
+          </div>
+          <div class="card">
+            <h3>Before → After (illustrative)</h3>
+            <p class="muted">Vero targets retrieval and ranking first — where most failures originate.</p>
+            <div style="margin:10px 0">
+              <div class="muted" style="margin-bottom:6px">Off‑the‑shelf (~80%)</div>
+              <div class="bar"><span style="width: 80%"></span></div>
             </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <div class="section-title fade-in">Why Choose VERO?</div>
-            <div class="section-subtitle fade-in">Comprehensive evaluation and monitoring for RAG pipelines with enterprise-grade reliability</div>
-            
-            <div class="features-grid">
-                <div class="feature-card fade-in">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Lightning Fast Reports</h3>
-                    <p>Get comprehensive evaluation reports in hours, not days. Our optimized engine delivers insights when you need them most.</p>
-                </div>
-                
-                <div class="feature-card fade-in">
-                    <div class="feature-icon">📊</div>
-                    <h3>End-to-End Insights</h3>
-                    <p>Detailed reports specialized for developers, product managers, and stakeholders. Everyone gets the data they need.</p>
-                </div>
-                
-                <div class="feature-card fade-in">
-                    <div class="feature-icon">🔄</div>
-                    <h3>Version Control</h3>
-                    <p>Track changes and compare performance over time with robust version control for your RAG pipeline configurations.</p>
-                </div>
+            <div style="margin:10px 0">
+              <div class="muted" style="margin-bottom:6px">With Vero (95%+)</div>
+              <div class="bar"><span style="width: 96%"></span></div>
             </div>
+            <ul class="muted" style="margin: 10px 0 0 18px;">
+              <li>Hybrid retrieval (dense + BM25)</li>
+              <li>Fine‑tuned embeddings on domain QA</li>
+              <li>Reranker A/B + domain tuning</li>
+              <li>Guardrails: low‑confidence fallbacks</li>
+            </ul>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="container">
-            <div class="section-title fade-in">Frequently Asked Questions</div>
-            
-            <div class="faq-grid">
-                <div class="faq-item fade-in">
-                    <h4>What does VERO offer?</h4>
-                    <p>VERO provides a comprehensive platform for the evaluation and continuous monitoring of RAG pipelines, ensuring optimal performance and reliability.</p>
-                </div>
-                
-                <div class="faq-item fade-in">
-                    <h4>How do I use VERO?</h4>
-                    <p>Simply connect your pipeline and run an evaluation. Get detailed reports specialized for developers, product managers, and stakeholders.</p>
-                </div>
-
-                <div class="faq-item fade-in">
-                    <h4>How long does a report take?</h4>
-                    <p>Our evaluation engine generates reports within hours, not days. Fast insights when you need them most.</p>
-                </div>
-
-                <div class="faq-item fade-in">
-                    <h4>Does VERO support version control?</h4>
-                    <p>Yes, robust version control is a core feature, allowing you to track changes and compare performance over time.</p>
-                </div>
-
-                <div class="faq-item fade-in">
-                    <h4>What is RAG?</h4>
-                    <p>Retrieval-Augmented Generation (RAG) is an AI framework for improving LLM responses by grounding the model on external knowledge sources.</p>
-                </div>
-
-                <div class="faq-item fade-in">
-                    <h4>What happens after joining?</h4>
-                    <p>You'll be first in line for early access, a product demo, and an invitation to set up your first evaluation.</p>
-                </div>
-            </div>
+      <section id="report" class="section">
+        <h2>Report snapshot</h2>
+        <p class="muted">Generated by <code class="code">vero-eval</code> in an in‑house test.</p>
+        <div class="grid-3">
+          <div class="card panel">
+            <strong>Root‑cause attribution</strong>
+            <ul class="muted">
+              <li>Retrieval recall gaps: 52%</li>
+              <li>Reranking misplacements: 30%</li>
+              <li>Generation issues: 18%</li>
+            </ul>
+          </div>
+          <div class="card panel">
+            <strong>Key metrics</strong>
+            <ul class="muted">
+              <li>Recall 0.42 • Precision 0.66</li>
+              <li>MAP 0.50 • MRR 0.61 • NDCG@10 0.57</li>
+              <li>Faithfulness 0.98 • SEMScore 0.64</li>
+              <li>Context sufficiency 0.84 • Task success 0.62</li>
+            </ul>
+          </div>
+          <div class="card panel">
+            <strong>Recommended fixes</strong>
+            <ul class="muted">
+              <li>Adopt hybrid retrieval (dense + BM25)</li>
+              <li>Fine‑tune embeddings on domain QA</li>
+              <li>Test reranker disable/enable + tune</li>
+              <li>Smaller sliding‑window chunks (500–700 tokens)</li>
+            </ul>
+          </div>
         </div>
-    </section>
+      </section>
 
+      <section id="how" class="section">
+        <h2>How Vero hardens your AI</h2>
+        <div class="grid-3">
+          <div class="card panel"><strong>Instrument</strong><p class="muted">Trace queries, contexts, and answers. Plug into LangChain/LlamaIndex, OpenAI/Azure, and major vector DBs.</p></div>
+          <div class="card panel"><strong>Evaluate</strong><p class="muted">Measure retrieval quality, faithfulness, groundedness, latency and cost. Catch regressions in CI.</p></div>
+          <div class="card panel"><strong>Improve</strong><p class="muted">A/B prompts, chunking, top‑k, rerankers, and models. Promote variants that move your KPI.</p></div>
+        </div>
+      </section>
+
+      <section id="roles" class="section">
+        <h2>For stakeholders</h2>
+        <div class="grid-3">
+          <div class="card panel"><span class="mention">PMs</span><p class="muted">Define success criteria, monitor user‑visible accuracy, and prevent trust‑eroding regressions.</p></div>
+          <div class="card panel"><span class="mention">Lead‑Engineers</span><p class="muted">Pinpoint failure buckets fast with retrieval diffs and trace viewer.</p></div>
+          <div class="card panel"><span class="mention">CTOs</span><p class="muted">Ship on SLAs with auditable metrics, guardrails, and enterprise controls.</p></div>
+        </div>
+      </section>
+
+      <section id="cta" class="section panel" style="display:grid; place-items:center; padding: 28px; text-align:center;">
+        <h2>Stop trust erosion. Lift accuracy.</h2>
+        <p class="muted">Let’s take your AI from off‑the‑shelf 80% to <strong>95%+ robust</strong>.</p>
+        <div class="hero-ctas">
+          <a class="btn primary" href="#demo">Book a stakeholder demo</a>
+          <a class="btn" href="#" onclick="copyInstall()" id="copyBtn2">Copy: pip install vero-eval</a>
+        </div>
+      </section>
+
+      <footer>
+        <div>© Vero. All rights reserved.</div>
+        <div>
+          <a href="mailto:team@vero.co.in">team@vero.co.in</a> ·
+          <a href="#">Docs</a> ·
+          <a href="#">GitHub</a>
+        </div>
+      </footer>
+    </main>
 
     <script>
-        // Intersection Observer for animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Form feedback
-        document.querySelector('.waitlist-form').addEventListener('submit', function(e) {
-            const button = this.querySelector('button');
-            const originalText = button.textContent;
-            button.textContent = 'Joining...';
-            button.disabled = true;
-            
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.disabled = false;
-            }, 2000);
-        });
+      function copyInstall() {
+        const text = 'pip install vero-eval';
+        navigator.clipboard.writeText(text);
+        const b1 = document.getElementById('copyBtn');
+        const b2 = document.getElementById('copyBtn2');
+        [b1,b2].filter(Boolean).forEach(btn => { const t = btn.textContent; btn.textContent='Copied!'; setTimeout(()=>btn.textContent=t, 1200); });
+      }
+      const ev = (name) => console.log('[analytics]', name);
+      const demoBtn = document.getElementById('cta-demo');
+      if (demoBtn) demoBtn.addEventListener('click', () => ev('cta_demo'));
     </script>
-</body>
-</html>
+  </body>
+  </html>
 

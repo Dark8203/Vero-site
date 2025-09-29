@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vero — From 80% to 95%+ Accurate AI</title>
+    <meta name="description" content="Vero helps teams take AI apps from 80% to 95%+ accuracy with rigorous RAG evaluation, retrieval testing, and continuous quality for agentic workflows." />
+    <meta name="theme-color" content="#0b1220" />
+    <style>
+      :root {
+        --bg: #0b1220; /* nearly black-navy */
+        --panel: #121a2b;
+        --muted: #96a2c1;
+        --text: #e7ecf8;
+        --brand: #7ee787; /* calm green */
+        --brand-2: #4cc9f0; /* accent blue */
+        --danger: #ff6b6b;
+        --shadow: rgba(0,0,0,0.35);
+        --radius: 14px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; }
+      a { color: var(--brand-2); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+      header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; position: sticky; top: 0; background: linear-gradient(180deg, rgba(11,18,32,0.95), rgba(11,18,32,0.6)); backdrop-filter: saturate(140%) blur(6px); z-index: 10; }
+      .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.2px; }
+      .logo-badge { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: 0 8px 24px -8px var(--shadow) inset, 0 8px 24px -12px var(--shadow); }
+      nav { display: flex; gap: 18px; align-items: center; }
+      .nav-link { color: var(--muted); font-weight: 600; }
+      .cta { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.09); background: linear-gradient(180deg, #1a2337, #121a2b); color: var(--text); padding: 10px 14px; border-radius: 12px; box-shadow: 0 8px 28px -8px var(--shadow); font-weight: 700; }
+      .cta .tag { color: var(--brand); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; opacity: 0.9; }
+      .hero { padding: 56px 0 24px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: center; }
+      .hero h1 { font-size: clamp(32px, 6vw, 58px); line-height: 1.05; margin: 0; letter-spacing: -0.6px; }
+      .hero p { color: var(--muted); font-size: 18px; margin: 14px 0 22px; }
+      .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+      .btn { border: 1px solid rgba(255,255,255,0.12); background: #10192a; color: var(--text); padding: 12px 16px; border-radius: 12px; font-weight: 700; }
+      .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #0b1220; border: none; }
+      .code { background: #0e1526; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--text); }
+      .panel { background: var(--panel); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius); box-shadow: 0 12px 36px -12px var(--shadow); }
+      .illus { width: 100%; height: 420px; background: radial-gradient(100% 80% at 60% 10%, rgba(126,231,135,0.25), transparent 70%), radial-gradient(100% 80% at 30% 60%, rgba(76,201,240,0.22), transparent 70%), #0f172a; border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius); display: grid; place-items: center; position: relative; }
+      .illus svg { width: 86%; height: auto; }
+      .section { padding: 54px 0; }
+      .section h2 { font-size: 28px; margin: 0 0 12px; }
+      .muted { color: var(--muted); }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .card { padding: 18px; }
+      .badge { display: inline-block; font: 12px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; padding: 6px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); color: var(--brand); background: #0e1628; }
+      .role { display: flex; flex-direction: column; gap: 6px; }
+      .footer { padding: 24px 0 48px; color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+      .logos { opacity: 0.7; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+      .logo-pill { height: 36px; border-radius: 999px; background: #0e1526; border: 1px dashed rgba(255,255,255,0.12); display: grid; place-items: center; color: var(--muted); font-size: 12px; }
+      .kbd { padding: 2px 6px; border: 1px solid rgba(255,255,255,0.18); border-bottom-width: 3px; background: #0f172a; border-radius: 6px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+      @media (max-width: 960px) { .hero { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr; } .grid-2 { grid-template-columns: 1fr; } nav { display: none; } }
+    </style>
+  </head>
+  <body>
+    <header class="container">
+      <div class="logo"><span class="logo-badge" aria-hidden="true"></span> Vero</div>
+      <nav>
+        <a class="nav-link" href="#how">How it works</a>
+        <a class="nav-link" href="#features">Features</a>
+        <a class="nav-link" href="#roles">For teams</a>
+        <a class="nav-link" href="#oss">Open source</a>
+        <a class="cta" href="#cta"><span class="tag">pip install vero-eval</span></a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="hero" id="top">
+        <div>
+          <div class="badge">From 80% → 95%+ accuracy</div>
+          <h1>Production-grade QA for RAG and agentic workflows</h1>
+          <p>Vero helps Product and Engineering teams ship AI features with confidence. Evaluate retrieval, measure output quality, and continuously lift accuracy with targeted experiments — not guesswork.</p>
+          <div class="hero-ctas">
+            <a class="btn primary" href="#demo" id="cta-demo">Book a demo</a>
+            <a class="btn" href="#cta" id="cta-install">pip install vero-eval</a>
+            <code class="code">pip install vero-eval</code>
+          </div>
+          <p class="muted" style="margin-top:10px">Trusted by teams who need high accuracy for user‑facing AI.</p>
+        </div>
+        <div class="illus panel" aria-label="Illustration: RAG evaluation dashboard">
+          <!-- Simple inline SVG diagram: corpus → retrieval → LLM → eval → score -->
+          <svg viewBox="0 0 900 520" role="img" aria-labelledby="illusTitle illusDesc">
+            <title id="illusTitle">RAG Evaluation Flow</title>
+            <desc id="illusDesc">Data flows from documents to retriever to LLM and evaluation with scores.</desc>
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0%" stop-color="#7ee787" />
+                <stop offset="100%" stop-color="#4cc9f0" />
+              </linearGradient>
+            </defs>
+            <g fill="none" stroke="url(#g1)" stroke-width="2">
+              <rect x="40" y="50" width="180" height="90" rx="12" ry="12" fill="#0b1220" stroke="#365380"/>
+              <text x="130" y="105" fill="#96a2c1" text-anchor="middle" font-size="18">Corpus</text>
+              <rect x="280" y="50" width="180" height="90" rx="12" ry="12" fill="#0b1220" stroke="#365380"/>
+              <text x="370" y="105" fill="#96a2c1" text-anchor="middle" font-size="18">Retriever</text>
+              <rect x="520" y="50" width="180" height="90" rx="12" ry="12" fill="#0b1220" stroke="#365380"/>
+              <text x="610" y="105" fill="#96a2c1" text-anchor="middle" font-size="18">LLM</text>
+              <rect x="760" y="50" width="100" height="90" rx="12" ry="12" fill="#0b1220" stroke="#365380"/>
+              <text x="810" y="105" fill="#96a2c1" text-anchor="middle" font-size="18">Eval</text>
+              <path d="M220 95 L280 95" /><path d="M460 95 L520 95" /><path d="M700 95 L760 95" />
+              <rect x="40" y="200" width="360" height="220" rx="14" ry="14" fill="#0b1220" stroke="#365380"/>
+              <text x="220" y="232" fill="#96a2c1" text-anchor="middle" font-size="16">Top‑k, MMR, Hybrid</text>
+              <rect x="420" y="200" width="440" height="220" rx="14" ry="14" fill="#0b1220" stroke="#365380"/>
+              <text x="640" y="232" fill="#96a2c1" text-anchor="middle" font-size="16">Precision • Recall • Faithfulness</text>
+              <circle cx="520" cy="310" r="54" fill="#0f172a" stroke="#4cc9f0" />
+              <text x="520" y="315" fill="#7ee787" text-anchor="middle" font-size="24">95%+</text>
+            </g>
+          </svg>
+        </div>
+      </section>
+
+      <section id="how" class="section">
+        <h2>How Vero lifts accuracy</h2>
+        <p class="muted">Instrument your pipeline, generate ground truth, then iterate with evidence.</p>
+        <div class="grid-3">
+          <div class="card panel">
+            <strong>1) Instrument</strong>
+            <p class="muted">Capture queries, contexts, and responses for every run. Support for LangChain/LlamaIndex, OpenAI/Azure, and vector DBs.</p>
+          </div>
+          <div class="card panel">
+            <strong>2) Evaluate</strong>
+            <p class="muted">Measure retrieval (Precision/Recall/MRR), output quality (faithfulness, completeness), and latency/cost.</p>
+          </div>
+          <div class="card panel">
+            <strong>3) Improve</strong>
+            <p class="muted">Compare prompts, retrievers, top‑k, chunking, and rerankers. Promote the variant that moves the metric — safely.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="section">
+        <h2>Purpose‑built for RAG and agentic retrieval</h2>
+        <div class="grid-3">
+          <div class="card panel"><strong>Ground truth at scale</strong><p class="muted">Semi‑auto label with LLM judges and human spot checks.</p></div>
+          <div class="card panel"><strong>Retrieval analytics</strong><p class="muted">Distribution of hit/miss by source, filter leakage, failure buckets.</p></div>
+          <div class="card panel"><strong>Experiment runner</strong><p class="muted">A/B prompts, chunk sizes, rerankers, or models with one command.</p></div>
+          <div class="card panel"><strong>Policy & guardrails</strong><p class="muted">Reject low‑confidence answers; fallback flows on uncertainty.</p></div>
+          <div class="card panel"><strong>Dashboards</strong><p class="muted">Accuracy, drift, and cost/latency trends by environment.</p></div>
+          <div class="card panel"><strong>CI checks</strong><p class="muted">Break the build when quality drops on critical scenarios.</p></div>
+        </div>
+      </section>
+
+      <section id="roles" class="section">
+        <h2>Built for PMs, Lead Engineers, and CTOs</h2>
+        <div class="grid-3">
+          <div class="card panel role"><strong>Product Managers</strong><p class="muted">Define success criteria and monitor user‑visible accuracy with scenario suites.</p></div>
+          <div class="card panel role"><strong>Lead Engineers</strong><p class="muted">Diagnose failure cases fast with trace viewer and retrieval diffs.</p></div>
+          <div class="card panel role"><strong>CTOs</strong><p class="muted">Confidently ship AI features on SLAs with auditable metrics.</p></div>
+        </div>
+      </section>
+
+      <section id="oss" class="section">
+        <h2>Open source: <code class="kbd">pip install vero-eval</code></h2>
+        <div class="grid-2">
+          <div class="card panel">
+            <p class="muted">Start locally in minutes. Log runs, evaluate outputs, and share reports with your team.</p>
+            <pre class="code">pip install vero-eval
+python -m vero_eval.quickstart</pre>
+            <p class="muted">Join the community, contribute, and shape the roadmap.</p>
+          </div>
+          <div class="card panel">
+            <strong>What to show visually</strong>
+            <ul class="muted">
+              <li>Evaluation heatmap by scenario</li>
+              <li>Query → retrieved docs → answer trace</li>
+              <li>Before/After experiment comparison</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="logos">
+          <div class="logo-pill">Your logo here</div>
+          <div class="logo-pill">Security‑first</div>
+          <div class="logo-pill">Enterprise‑ready</div>
+          <div class="logo-pill">SOC2‑friendly</div>
+          <div class="logo-pill">On‑prem option</div>
+        </div>
+      </section>
+
+      <section id="cta" class="section panel" style="display:grid; place-items:center; padding: 28px; text-align:center;">
+        <h2>Ready to lift accuracy?</h2>
+        <p class="muted">Let’s take your AI app from 80% to 95%+ with measurable improvements.</p>
+        <div class="hero-ctas">
+          <a class="btn primary" href="#demo">Book a demo</a>
+          <a class="btn" href="#" onclick="copyInstall()" id="copyBtn">Copy: pip install vero-eval</a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div>© Vero. All rights reserved.</div>
+        <div>
+          <a href="mailto:team@vero.co.in">team@vero.co.in</a> ·
+          <a href="#">Docs</a> ·
+          <a href="#">GitHub</a>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      function copyInstall() {
+        navigator.clipboard.writeText('pip install vero-eval');
+        const btn = document.getElementById('copyBtn');
+        const label = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = label; }, 1200);
+      }
+      // Lightweight analytics hooks for CTAs
+      const ev = (name) => console.log('[analytics]', name);
+      document.getElementById('cta-demo').addEventListener('click', () => ev('cta_demo'));
+      document.getElementById('cta-install').addEventListener('click', () => ev('cta_install'));
+    </script>
+  </body>
+  </html>
+
